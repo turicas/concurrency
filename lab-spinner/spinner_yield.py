@@ -8,22 +8,18 @@
 
 import asyncio
 import itertools
-import sys
 
 
 @asyncio.coroutine  # <1>
 def spin(msg):
-    write, flush = sys.stdout.write, sys.stdout.flush
     for char in itertools.cycle('|/-\\'):
         status = char + ' ' + msg
-        write(status)
-        flush()
-        write('\b' * len(status))
+        print('\r' + status, end='', flush=True)
         try:
             yield from asyncio.sleep(.1)  # <2>
         except asyncio.CancelledError:  # <3>
             break
-    write(' ' * len(status) + '\b' * len(status))
+    print('\r', end='')
 
 
 @asyncio.coroutine  # <4>

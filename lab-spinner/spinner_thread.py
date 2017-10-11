@@ -9,19 +9,15 @@
 import threading
 import itertools
 import time
-import sys
 
 
 def spin(msg, done):  # <1>
-    write, flush = sys.stdout.write, sys.stdout.flush
     for char in itertools.cycle('|/-\\'):
         status = char + ' ' + msg
-        write(status)
-        flush()
-        write('\b' * len(status))
+        print('\r' + status, end='', flush=True)
         if done.wait(.1):  # <2>
             break  # <3>
-    write(' ' * len(status) + '\b' * len(status))
+    print('\r', end='')
 
 
 def slow_function():  # <4>

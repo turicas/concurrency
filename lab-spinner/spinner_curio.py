@@ -11,21 +11,17 @@
 
 import curio
 import itertools
-import sys
 
 
 async def spin(msg):  # <1>
-    write, flush = sys.stdout.write, sys.stdout.flush
     for char in itertools.cycle('|/-\\'):
         status = char + ' ' + msg
-        write(status)
-        flush()
-        write('\b' * len(status))
+        print('\r' + status, end='', flush=True)
         try:
             await curio.sleep(.1)  # <2>
         except curio.CancelledError:  # <3>
             break
-    write(' ' * len(status) + '\b' * len(status))
+    print('\r', end='')
 
 
 async def slow_function():  # <4>
