@@ -17,12 +17,12 @@ async def spin(msg):  # <1>
         status = char + ' ' + msg
         write(status)
         flush()
-        write('\x08' * len(status))
+        write('\b' * len(status))
         try:
             await asyncio.sleep(.1)  # <2>
         except asyncio.CancelledError:  # <3>
             break
-    write(' ' * len(status) + '\x08' * len(status))
+    write(' ' * len(status) + '\b' * len(status))
 
 
 async def slow_function():  # <4>

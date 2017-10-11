@@ -18,10 +18,10 @@ def spin(msg, done):  # <1>
         status = char + ' ' + msg
         write(status)
         flush()
-        write('\x08' * len(status))
+        write('\b' * len(status))
         if done.wait(.1):  # <2>
             break  # <3>
-    write(' ' * len(status) + '\x08' * len(status))
+    write(' ' * len(status) + '\b' * len(status))
 
 
 def slow_function():  # <4>
